@@ -2,6 +2,9 @@ import { useContext, useRef } from "react";
 import { CVContext } from "../context/CVContext";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import ModernTemplate from "../templates/ModernTemplate";
+import MinimalTemplate from "../templates/MinimalTemplate";
+import ProfessionalTemplate from "../templates/ProfessionalTemplate";
 
 export default function Preview() {
   const { cvData } = useContext(CVContext);
@@ -22,38 +25,18 @@ export default function Preview() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
-      <div className="bg-white shadow-lg rounded-lg w-full max-w-2xl p-8">
-        {/* CV Content */}
-        <div ref={componentRef} className="bg-white">
-          <h1 className="text-3xl font-extrabold text-blue-700">{cvData.name}</h1>
-          <p className="text-gray-600">{cvData.email} | {cvData.phone}</p>
-
-          <section className="mt-6">
-            <h2 className="text-xl font-semibold text-gray-800">🎓 Education</h2>
-            <p className="text-gray-700">{cvData.education}</p>
-          </section>
-
-          <section className="mt-6">
-            <h2 className="text-xl font-semibold text-gray-800">💼 Experience</h2>
-            <p className="text-gray-700">{cvData.experience}</p>
-          </section>
-
-          <section className="mt-6">
-            <h2 className="text-xl font-semibold text-gray-800">🛠 Skills</h2>
-            <p className="text-gray-700">{cvData.skills}</p>
-          </section>
-        </div>
-
-        {/* Download Button */}
-        <div className="text-center mt-8">
-          <button
-            onClick={handleDownloadPDF}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition"
-          >
-            📥 Download as PDF
-          </button>
-        </div>
+      <div ref={componentRef} className="bg-white shadow-lg rounded-lg w-full max-w-2xl p-8">
+        {cvData.template === "modern" && <ModernTemplate cvData={cvData} />}
+        {cvData.template === "minimal" && <MinimalTemplate cvData={cvData} />}
+        {cvData.template === "professional" && <ProfessionalTemplate cvData={cvData} />}
       </div>
+
+      <button
+        onClick={handleDownloadPDF}
+        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition mt-6"
+      >
+        📥 Download as PDF
+      </button>
     </div>
   );
 }
