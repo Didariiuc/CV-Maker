@@ -1,12 +1,24 @@
-export default function InputField({ label, value, onChange }) {
+export default function InputField({ 
+  label, 
+  value, 
+  onChange, 
+  type = "text", 
+  placeholder = "" 
+}) {
   return (
-    <div className="mb-4">
-      <label className="block text-sm font-medium mb-1">{label}</label>
+    <div className="mb-5">
+      {/* Label */}
+      <label className="block text-sm font-semibold text-gray-700 mb-2">
+        {label}
+      </label>
+
+      {/* Input */}
       <input
-        type="text"
+        type={type}
         value={value}
         onChange={onChange}
-        className="w-full border rounded px-3 py-2"
+        placeholder={placeholder}
+        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
       />
     </div>
   );

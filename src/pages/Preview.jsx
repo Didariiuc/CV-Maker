@@ -9,7 +9,7 @@ export default function Preview() {
 
   const handleDownloadPDF = () => {
     const input = componentRef.current;
-    html2canvas(input).then((canvas) => {
+    html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
       const imgProps = pdf.getImageProperties(imgData);
@@ -21,26 +21,39 @@ export default function Preview() {
   };
 
   return (
-    <div className="p-6 max-w-lg mx-auto">
-      {/* CV Content */}
-      <div ref={componentRef} className="border rounded shadow p-6 bg-white">
-        <h1 className="text-2xl font-bold">{cvData.name}</h1>
-        <p>{cvData.email} | {cvData.phone}</p>
-        <h2 className="mt-4 font-semibold">Education</h2>
-        <p>{cvData.education}</p>
-        <h2 className="mt-4 font-semibold">Experience</h2>
-        <p>{cvData.experience}</p>
-        <h2 className="mt-4 font-semibold">Skills</h2>
-        <p>{cvData.skills}</p>
-      </div>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
+      <div className="bg-white shadow-lg rounded-lg w-full max-w-2xl p-8">
+        {/* CV Content */}
+        <div ref={componentRef} className="bg-white">
+          <h1 className="text-3xl font-extrabold text-blue-700">{cvData.name}</h1>
+          <p className="text-gray-600">{cvData.email} | {cvData.phone}</p>
 
-      {/* Download Button */}
-      <button
-        onClick={handleDownloadPDF}
-        className="bg-blue-600 text-white px-4 py-2 rounded mt-4"
-      >
-        Download as PDF
-      </button>
+          <section className="mt-6">
+            <h2 className="text-xl font-semibold text-gray-800">🎓 Education</h2>
+            <p className="text-gray-700">{cvData.education}</p>
+          </section>
+
+          <section className="mt-6">
+            <h2 className="text-xl font-semibold text-gray-800">💼 Experience</h2>
+            <p className="text-gray-700">{cvData.experience}</p>
+          </section>
+
+          <section className="mt-6">
+            <h2 className="text-xl font-semibold text-gray-800">🛠 Skills</h2>
+            <p className="text-gray-700">{cvData.skills}</p>
+          </section>
+        </div>
+
+        {/* Download Button */}
+        <div className="text-center mt-8">
+          <button
+            onClick={handleDownloadPDF}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition"
+          >
+            📥 Download as PDF
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
